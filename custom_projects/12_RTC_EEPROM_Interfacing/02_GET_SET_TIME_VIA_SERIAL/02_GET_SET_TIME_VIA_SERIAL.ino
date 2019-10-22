@@ -24,13 +24,23 @@ DateTime_t xDateTime;
 
 
 byte decToBcd(byte val){
-// Convert normal decimal numbers to binary coded decimal
+#if 1
+  // Convert normal decimal numbers to binary coded decimal
+  // We need to do this, else time is treated as decimal, and seconds and minutes go till 100 :(
   return ( (val/10*16) + (val%10) );
+#else
+  return val;
+#endif
 }
 
 byte bcdToDec(byte val)  {
-// Convert binary coded decimal to normal decimal numbers
+#if 1
+  // Convert binary coded decimal to normal decimal numbers
+  // We need to do this, else time is treated as decimal, and seconds and minutes go till 100 :(
   return ( (val/16*10) + (val%16) );
+#else
+  return val;
+#endif
 }
 
 char * pcGetWeekDayStr( uint8_t uiWeekDay )
@@ -41,19 +51,27 @@ char * pcGetWeekDayStr( uint8_t uiWeekDay )
 	{
 		case 1:
 			pcWeekDay = (char *) "Sunday";
+      break;
 		case 2:
 			pcWeekDay = (char *) "Monday";
+      break;
 		case 3:
 			pcWeekDay = (char *) "Tuesday";
+      break;
 		case 4:
 			pcWeekDay = (char *) "Wednessday";
+      break;
 		case 5:
 			pcWeekDay = (char *) "Thursday";
+      break;
 		case 6:
 			pcWeekDay = (char *) "Friday";
+      break;
 		case 7:
 			pcWeekDay = (char *) "Saturday";
+      break;
 	}
+ 
 	return pcWeekDay;
 }
 
@@ -78,13 +96,13 @@ void vGetRtcFromUser()
 	Serial.println(xDateTime.day); 
 
 	/* Get Week Day */
-	Serial.print("Enter Week Day (0 [Sunday] - 6 [Saturday]) : ");
+	Serial.print("Enter Week Day (1 [Sunday] - 7 [Saturday]) : ");
 	while( Serial.available() == 0 ); // Wait for user input
-	xDateTime.day = strtoul(Serial.readString().c_str(), NULL, 0);
-	Serial.println(xDateTime.day);
+	xDateTime.weekday = strtoul(Serial.readString().c_str(), NULL, 0);
+	Serial.println(xDateTime.weekday);
 
 	/* Get Hour */
-	Serial.print("Enter Hour : ");
+	Serial.print("Enter Hour (24-hour) : ");
 	while( Serial.available() == 0 ); // Wait for user input
 	xDateTime.hour = strtoul(Serial.readString().c_str(), NULL, 0);
 	Serial.println(xDateTime.hour); 
@@ -99,21 +117,20 @@ void vGetRtcFromUser()
 	Serial.print("Enter Second : ");
 	while( Serial.available() == 0 ); // Wait for user input
 	xDateTime.second = strtoul(Serial.readString().c_str(), NULL, 0);
-	Serial.println(xDateTime.second); 
-
+	Serial.println(xDateTime.second);
 }
 
 void setDateTime()
 {
 	vGetRtcFromUser();
 
-	byte second =      xDateTime.second;	//0-59
-	byte minute =      xDateTime.minute;	//0-59
-	byte hour =        xDateTime.hour;		//0-23
-	byte weekDay =     xDateTime.weekday;	//1-7
-	byte monthDay =    xDateTime.day;		//1-31
-	byte month =       xDateTime.month;		//1-12
-	byte year  =       xDateTime.year;		//0-99
+	byte second     = xDateTime.second;	//0-59
+	byte minute     = xDateTime.minute;	//0-59
+	byte hour       = xDateTime.hour;		//0-23
+	byte weekDay    = xDateTime.weekday;	//1-7
+	byte monthDay   = xDateTime.day;		//1-31
+	byte month      = xDateTime.month;		//1-12
+	byte year       = xDateTime.year;		//0-99
 
 	Wire.beginTransmission(DS1307_ADDRESS);
 	Wire.write(zero); //stop Oscillator
@@ -143,15 +160,15 @@ void printDate()
 	int second = bcdToDec(Wire.read());
 	int minute = bcdToDec(Wire.read());
 	int hour = bcdToDec(Wire.read() & 0b111111); //24 hour time
-	int weekDay = bcdToDec(Wire.read()); //0-6 -> sunday - Saturday
+	int weekDay = bcdToDec(Wire.read()); //0-6 -> Sunday - Saturday
 	int monthDay = bcdToDec(Wire.read());
 	int month = bcdToDec(Wire.read());
 	int year = bcdToDec(Wire.read());
 
 	//print the date e.g [Tuesday] 22/10/2019 23:59:59
-	Serial.print("- ");
+	Serial.print("[ ");
 	Serial.print(pcGetWeekDayStr(weekDay));
-	Serial.print(" - ");
+	Serial.print(" ] ");
 	Serial.print(monthDay);
 	Serial.print("/");
 	Serial.print(month);
@@ -166,17 +183,22 @@ void printDate()
 }
 
 void setup () 
-{	
+{
+  String cliOption = "";
+  
 	Wire.begin();
 	Serial.begin( SERIAL_BAUDRATE );
 
 	Serial.print("Would you like to setup Date & Time ? ( y or n) : ");
 	while( Serial.available() == 0 ); // Wait for user input
 
-	if( strcmp( Serial.readString().c_str(), "y" ) )
+
+  cliOption = Serial.readString();    // cliOption = "y + NULL" or "n + NULL"
+  Serial.println(cliOption);
+	if( strncmp( cliOption.c_str(),"y", 1) == 0 ) // Compare only first ASCII char
 	{
 		setDateTime(); //MUST CONFIGURE IN FUNCTION
-	}	
+	}
 }
 
 void loop () 
