@@ -41,14 +41,12 @@ SdFile root;
 #if PRINT_MMC_INFO
 void vPrintMMCInfo( Sd2Card card )
 {
-    SdVolume volume;
-    
     Serial.print("\nInitializing SD card...");
 
     // we'll use the initialization code from the utility libraries
     // since we're just testing if the card is working!
     if ( !card.init( SPI_HALF_SPEED, CS_PIN ) ) {
-      Serial.println("initialization failed. Things to check:");
+      Serial.println("Initialization failed. \nThings to check:");
       Serial.println("* is a card inserted?");
       Serial.println("* is your wiring correct?");
       Serial.println("* did you change the chipSelect pin to match your shield or module?");
@@ -124,10 +122,16 @@ void setup() {
   vPrintMMCInfo( card );
 #else
 
+  // For Mega boards with an Ethernet shield, make sure the Wiznet
+  // chip is not selected:
+  pinMode( CS_PIN, OUTPUT );
+  digitalWrite( CS_PIN, HIGH );
+
+#if 1
   Serial.print("Initializing SD card...");
 
   if ( !card.init(SPI_HALF_SPEED, CS_PIN ) ) {
-    Serial.println("initialization failed. Things to check:");
+    Serial.println("Initialization failed. \nThings to check:");
     Serial.println("* is a card inserted?");
     Serial.println("* is your wiring correct?");
     Serial.println("* did you change the chipSelect pin to match your shield or module?");
@@ -136,22 +140,33 @@ void setup() {
     Serial.println("Wiring is correct and a card is present.");
   }
 
-#if 1
+  // Now we will try to open 
+  // the 'volume'/'partition' - it should be FAT16 or FAT32
   Serial.print("Initializing Volume / Partition");
-  // Now we will try to open the 'volume'/'partition' - it should be FAT16 or FAT32
   if (!volume.init(card)) {
     Serial.println("Could not find FAT16/FAT32 partition.\nMake sure you've formatted the card");
     while (1);
   }
   Serial.println("...Done.");
-#endif
+#else if 
 
+  if (!SD.begin( CS_PIN, SPI_HALF_SPEED )) {
+    Serial.println("Initialization failed!");
+    while (1);
+  }
+#endif 
+
+  if( root.openRoot(volume) )
+  {
+     Serial.println("Open Root Success!");
+     while(1);
+  }
+  
   // open the file. note that only one file can be open at a time,
   // so you have to close this one before opening another.
   myFile = SD.open("test.txt", FILE_WRITE);
-
  
-// if the file opened okay, write to it:
+  // if the file opened okay, write to it:
   if (myFile) {
     Serial.print("Writing to test.txt...");
     myFile.println("testing 1, 2, 3.");
