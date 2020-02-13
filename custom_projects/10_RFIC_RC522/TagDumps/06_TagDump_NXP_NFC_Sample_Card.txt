@@ -1,0 +1,20 @@
+Card UID: 04 A2 6B D2 9C 39 80
+Card SAK: 00
+PICC type: MIFARE Ultralight or Ultralight C
+Page  0  1  2  3
+  0   04 A2 6B 45
+  1   D2 9C 39 80
+  2   F7 48 00 00
+  3   E1 10 6D 00
+  4   03 1D D1 01
+  5   19 55 01 6E
+  6   78 70 2E 63
+  7   6F 6D 2F 64
+  8   65 6D 6F 62
+  9   6F 61 72 64
+ 10   2F 4F 4D 35
+ 11   35 37 38 FE
+ 12   00 00 00 00
+ 13   00 00 00 00
+ 14   00 00 00 00
+ 15   00 00 00 00

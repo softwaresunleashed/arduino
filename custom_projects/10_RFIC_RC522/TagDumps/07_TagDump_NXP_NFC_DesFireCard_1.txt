@@ -1,0 +1,23 @@
+Firmware Version: 0x92 = v2.0
+Scan PICC to see UID, SAK, type, and data blocks...
+Card UID: 04 36 3D EA 66 34 80
+Card SAK: 00
+PICC type: MIFARE Ultralight or Ultralight C
+Page  0  1  2  3
+  0   04 36 3D 87
+  1   EA 66 34 80
+  2   38 48 00 00
+  3   00 00 00 00
+  4   02 00 00 10
+  5   00 06 01 10
+  6   11 FF 00 00
+  7   00 00 00 00
+  8   00 00 00 00
+  9   00 00 00 00
+ 10   00 00 00 00
+ 11   00 00 00 00
+ 12   00 00 00 00
+ 13   00 00 00 00
+ 14   00 00 00 00
+ 15   00 00 00 00
+

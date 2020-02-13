@@ -1,0 +1,34 @@
+Card UID: 08 D7 51 78
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 93 E6 D6
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 1C D9 44
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 70 E5 F8
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 B9 D3 B1
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 B2 A9 6D
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
+
+Card UID: 08 FA 72 35
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.

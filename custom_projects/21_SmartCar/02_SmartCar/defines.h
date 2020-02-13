@@ -18,9 +18,8 @@
 /* System Level Defines */
 #define SERIAL_EN			1
 #define MOTOR_CONTROL_EN  	1
-
 #define OLED_SUPPORTED  	1
-
+#define PROXIMITY_RADAR_EN	1
 
 
 

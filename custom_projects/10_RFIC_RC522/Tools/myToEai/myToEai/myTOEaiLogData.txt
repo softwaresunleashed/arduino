@@ -1,0 +1,17 @@
+At first Select the readers
+Selected Contactless Reader =Broadcom Corp Contactless SmartCard 0
+Error in connecting to the card, may be no card is inserted
+Selected Contactless Reader =BROADCOM NFC Smartcard Reader 0
+Error in connecting to the card, may be no card is inserted
+Selected Contactless Reader =Broadcom Corp Contactless SmartCard 0
+Error in connecting to the card, may be no card is inserted
+Selected Contactless Reader =BROADCOM NFC Smartcard Reader 0
+Error in connecting to the card, may be no card is inserted
+Selected Contact Reader =Broadcom Corp Contacted SmartCard 0
+ATR of the SAM = 3BEA00008131FE450031C173C840000090007A
+Selected Contactless Reader =BROADCOM NFC Smartcard Reader 0
+Error in connecting to the card, may be no card is inserted
+Selected Contactless Reader =Broadcom Corp Contactless SmartCard 0
+Error in connecting to the card, may be no card is inserted
+Selected Contactless Reader =BROADCOM NFC Smartcard Reader 0
+Error in connecting to the card, may be no card is inserted

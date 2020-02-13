@@ -44,53 +44,50 @@ void MotorControlThread(void *pvParameters)
 	while(1)
 	{
 #if SERIAL_EN  
-	  Serial.println("[MCL] All Motors Forward...");
+		Serial.println("[MCL] All Motors Forward...");
 #endif
-	    
+		    
 	    // Go Forward
 	    motor1.run( FORWARD );
 	    motor2.run( FORWARD );
 	    motor3.run( FORWARD );
 	    motor4.run( FORWARD );
 	    delay( THRD_DELAY * 100 );
-	    
+		    
 	    // Go Backward
 #if SERIAL_EN  
-	  Serial.println("[MCL] All Motors Backward...");
+		Serial.println("[MCL] All Motors Backward...");
 #endif
-	    motor1.run( BACKWARD );
-	    motor2.run( BACKWARD );
-	    motor3.run( BACKWARD );
-	    motor4.run( BACKWARD );
-	    delay( THRD_DELAY * 100 );
-	    
+		motor1.run( BACKWARD );
+		motor2.run( BACKWARD );
+		motor3.run( BACKWARD );
+		motor4.run( BACKWARD );
+		delay( THRD_DELAY * 100 );
+
 	    // Stop motors
 #if SERIAL_EN  
-	  Serial.println("[MCL] All Motors Halt...");
+		Serial.println("[MCL] All Motors Halt...");
 #endif
-	    motor1.run( RELEASE );
-	    motor2.run( RELEASE );
-	    motor3.run( RELEASE );
-	    motor4.run( RELEASE );
-
-	    delay(THRD_DELAY * 100);
+		motor1.run( RELEASE );
+		motor2.run( RELEASE );
+		motor3.run( RELEASE );
+		motor4.run( RELEASE );
+		delay(THRD_DELAY * 100);
 	};
-
 }
 
 void initMotorControlThread()
 {
 #if SERIAL_EN
-  Serial.print("Creating Motor Control Task...");
+	Serial.print("Creating Motor Control Task...");
 #endif
 
-  xTaskCreate(MotorControlThread, "Motor Control Task", THREAD_STACK_SIZE, NULL, 1, NULL);
+	xTaskCreate(MotorControlThread, "Motor Control Task", THREAD_STACK_SIZE, NULL, 1, NULL);
 
 #if SERIAL_EN
-  Serial.println("[Done]");
+	Serial.println("[Done]");
 #endif  
 }
-
 
 #endif	/* MOTOR_CONTROL_EN */
 
@@ -152,9 +149,8 @@ void initDisplayPanel()
 		Serial.println(F("[Display] Display Panel Initialized."));
 #endif
 	
-	DisplayWrite(F("Smart Car"), 0, 0);
-	DisplayWrite(F("DP Init"), 0, 1);
-
+		DisplayWrite(F("Smart Car"), 0, 0);
+		DisplayWrite(F("DP Init"), 0, 1);
 	}
 #endif
 
@@ -163,7 +159,7 @@ void initDisplayPanel()
 void DisplayThread(void *pvParameters)
 {
 #if SERIAL_EN  
-  Serial.println("[Display] Starting Display Thread...");
+  Serial.println("[DisplayPanel] Starting Display Thread...");
 #endif
 
 	
@@ -171,6 +167,11 @@ void DisplayThread(void *pvParameters)
 
   while(1)
   {
+#if SERIAL_EN  
+	  Serial.println("[DisplayPanel] Thread Scheduled...");
+#endif
+	  
+	/* TODO : Add Display Panel routines to display current status */
 
     delay(THRD_DELAY);
   }
@@ -208,6 +209,12 @@ void UserInputThread(void *pvParameters)
 	  
   while(1)
   {
+#if SERIAL_EN  
+	Serial.println("[UserInput] Thread Scheduled...");
+#endif
+
+	/* TODO : Add User Input routines and act accordingly */
+
 
 	delay(THRD_DELAY);
   };
@@ -229,11 +236,54 @@ void initUserInputThread()
 /*******************************************************************************
  *******************************************************************************
  ********************************************************************************/
+/*
+	  Proximity Radar Thread
+	  ======================
+*/
+void ProximityRadarThread(void *pvParameters)
+{
+#if SERIAL_EN  
+	  Serial.println("[Proximity Radar] Starting Proxity Radar Thread...");
+#endif
+		  
+	  while(1)
+	  {
+#if SERIAL_EN  
+		Serial.println("[Proximity Radar] Thread Scheduled...");
+#endif
+		/* TODO : Add Proximity Sensor reading and acting */
+
+
+		delay(THRD_DELAY);
+	  };
+	}
+
+void initProximityRadarThread()
+{
+#if SERIAL_EN
+	Serial.print("Creating Proximity Radar Task...");
+#endif
+
+	xTaskCreate(ProximityRadarThread, "Proximity Radar Thread", THREAD_STACK_SIZE, NULL, 1, NULL);
+
+#if SERIAL_EN
+	Serial.println("[Done]");
+#endif  
+}
+
+
+
+
+
+/*******************************************************************************
+ *******************************************************************************
+ ********************************************************************************/
 void createSystemThreads()
 {
   initDisplayThread();
   initMotorControlThread();
   initUserInputThread();
+  initProximityRadarThread();
 }
 
 void initUartComm()
@@ -276,5 +326,6 @@ void setup()
 }
 
 
-/* We dont do anything here. We have our own threads */
+/* We dont do anything here. 
+	We have our own FreeRTOS threads */
 void loop() { }

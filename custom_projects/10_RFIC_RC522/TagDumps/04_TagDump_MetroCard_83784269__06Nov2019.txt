@@ -1,0 +1,4 @@
+Card UID: 04 86 61 6A BB 5F 80
+Card SAK: 20
+PICC type: PICC compliant with ISO/IEC 14443-4
+Dumping memory contents not implemented for that PICC type.
